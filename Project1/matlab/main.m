@@ -1,4 +1,5 @@
 close all
+clear all
 
 %% 1. Open image
 
@@ -49,3 +50,12 @@ imagesc(abs(fftshift(im_bl_fft)),[0 255])
 title('Spectrum of blurred image')
 colorbar
 
+
+var = im_fft-im_bl_fft; % calculate noise variance
+
+im_deblur = deblur(im_bl_fft,im_fft,var,h,'MMSE'); %'MMSE' for Minimum Mean Square Error, 
+                                              % 'CLS' for Constrained Least Square
+
+figure;
+
+imshow((im_deblur),[])
