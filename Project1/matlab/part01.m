@@ -1,8 +1,8 @@
 function part01()
 
-clear all;
-clc;
-close all;
+% clear all;
+% clc;
+% close all;
 
 %Loading image and drawing histogram
 
