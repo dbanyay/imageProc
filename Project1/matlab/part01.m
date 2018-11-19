@@ -8,7 +8,7 @@ close all;
 
 im = imread('lena512.bmp');
 figure(1)
-suptitle('Histograms')
+%subtitle('Histograms')
 subplot(2,2,1)
 imhist(im)
 title('Original Image','fontweight','normal');
@@ -28,7 +28,7 @@ imhist(imRedDynRange)
 title('Reduced Contrast Image','fontweight','normal');
 
 figure(2)
-suptitle('Grayscale Representation')
+%suptitle('Grayscale Representation')
 subplot(2,2,1)
 imshow(im)
 title('Original Image','fontweight','normal');
@@ -37,7 +37,7 @@ imshow(imRedDynRange)
 title('After Contrast Reduction','fontweight','normal');
 
 figure(3)
-suptitle('Scaled Colors Representation')
+%suptitle('Scaled Colors Representation')
 subplot(2,2,1)
 imagesc(im, [0 255]);
 colorbar;

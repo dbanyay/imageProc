@@ -1,20 +1,19 @@
-function im_deblur = deblur(im_bl_fft,Sf,Sn,h,type)
+function im = deblur(im_bl,h,var,type)
 
-H = fft2(h,size(Sf,1),size(Sf,2));
+h = mat2gray(h); %normalize [0,1]
+h = imresize(h,size(im_bl));
+
+G = fftshift(fft2(im_bl));
+
 
 if type == 'MMSE' % Wiener filter
     
-    H_conj = conj(H); % if H is real valued it does nothing
+    F = (h./(h.^2+(var))); 
     
-    H_mag = H*H_conj;
+    IM_F = G.*F;
     
-    K = abs(Sn^2)./abs(Sf^2);     
+    im = ifft2(ifftshift(IM_F));   
     
-    deblur_filt = (1./H).*(H_mag./(H_mag+K));  
-    
-    im_deblur = ifft2(fftshift(deblur_filt.*im_bl_fft));
-    
-     
    
 elseif type == 'CLS'
     

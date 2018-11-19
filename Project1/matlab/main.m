@@ -22,40 +22,48 @@ h = myblurgen('gaussian',r);
 
 im_bl = conv2(im,h,'same');
 
-%imshow(uint8(im_bl))
 
 %% 2. Spatial filtering
 
 
 %% 3. Freqency domain filtering
 
-im_fft = fft2(im);
-im_bl_fft = fft2(im_bl);
+
+im_fft = abs(fftshift(fft2(im))).^2;
+im_bl_fft = abs(fftshift(fft2(im_bl))).^2;
 
 subplot(2,2,1)
 imshow(im)
 title('Original image')
 
 subplot(2,2,2)
-imshow(uint8(im_bl))
+imshow(im_bl)
 title('Blurred image')
 
 subplot(2,2,3)
-imagesc(abs(fftshift(im_fft)),[0 255])
+imagesc(log(im_fft))
 title('Spectrum of original image')
 colorbar
 
 subplot(2,2,4)
-imagesc(abs(fftshift(im_bl_fft)),[0 255])
+imagesc(log(im_bl_fft))
 title('Spectrum of blurred image')
 colorbar
 
+%% Deblur algorithm
 
-var = im_fft-im_bl_fft; % calculate noise variance
+var = 0.0833;
 
-im_deblur = deblur(im_bl_fft,im_fft,var,h,'MMSE'); %'MMSE' for Minimum Mean Square Error, 
+
+im_deblur = deblur(im_bl,h,var,'MMSE'); %'MMSE' for Minimum Mean Square Error, 
                                               % 'CLS' for Constrained Least Square
 
 figure;
+subplot(122)
+imshow(im_deblur,[])
+title('Deblurred')
 
-imshow((im_deblur),[])
+subplot(121)
+imshow(im_bl,[])
+title('Blurred')
+

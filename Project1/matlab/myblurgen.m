@@ -12,7 +12,7 @@ case 'outoffocus'
     h = double(distance<=r);
     h = h./sum(h(:));
 case 'gaussian'
-    h = GaussKernel(r*2+1, r/2);
+    h = GaussKernel(r*2, r/2);
     h = h./sum(h(:));
 otherwise
     error('Unknown blur type.');
