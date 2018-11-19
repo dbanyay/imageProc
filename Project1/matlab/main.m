@@ -22,8 +22,6 @@ h = myblurgen('gaussian',r);
 
 im_bl = conv2(im,h,'same');
 
-%imshow(uint8(im_bl))
-
 %% 2. Spatial filtering
 
 
@@ -50,10 +48,10 @@ imagesc(abs(fftshift(im_bl_fft)),[0 255])
 title('Spectrum of blurred image')
 colorbar
 
+% var = im_fft-im_bl_fft; % calculate noise variance
+var = 0.0833;
 
-var = im_fft-im_bl_fft; % calculate noise variance
-
-im_deblur = deblur(im_bl_fft,im_fft,var,h,'MMSE'); %'MMSE' for Minimum Mean Square Error, 
+im_deblur = deblur(im_bl,var,h,'MMSE',im); %'MMSE' for Minimum Mean Square Error, 
                                               % 'CLS' for Constrained Least Square
 
 figure;
