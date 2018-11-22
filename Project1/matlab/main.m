@@ -12,14 +12,6 @@ n = mynoisegen('saltpepper', 512, 512, .05, .05);
 im_sp(n==0) = 0;
 im_sp(n==1) = 255;
 
-%% Create blurry image
-
-r = 8; % radius of Gaussian kernel
-
-h = myblurgen('gaussian',r);
-
-im_bl = conv2(im,h,'same');
-% im_bl = min(max(round(im_bl), 0), 255);
 
 
 %% 2. Spatial filtering
@@ -96,44 +88,33 @@ end
 % 
 % part02(im, im_sp);
 % 
-% %% 3. Freqency domain filtering
-% 
-% im_fft = abs(fftshift(fft2(im))).^2;
-% im_bl_fft = abs(fftshift(fft2(im_bl))).^2;
-% 
-% % figure()
-% % subplot(2,2,1)
-% % imshow(im)
-% % title('Original image')
-% % 
-% % subplot(2,2,2)
-% % imshow(im_bl,[])
-% % title('Blurred image')
-% % 
-% % subplot(2,2,3)
-% % imagesc(log(im_fft))
-% % title('Spectrum of original image')
-% % colorbar
-% % 
-% % subplot(2,2,4)
-% % imagesc(log(im_bl_fft))
-% % title('Spectrum of blurred image')
-% % colorbar
-% 
-% %% Deblur algorithm
-% 
-% var = 0.0833;
-% size(im_bl)
-% im_deblur = deblur_bilal(im_bl,h,var,'MMSE'); %'MMSE' for Minimum Mean Square Error,                                               
-% size(im_deblur)
-% % 'CLS' for Constrained Least Square
-% 
-% figure;
-% subplot(122)
-% imshow(im_deblur,[])
-% title('Deblurred')
-% 
-% subplot(121)
-% imshow(im_bl,[])
-% title('Blurred')
+%% 3. Freqency domain filtering
 
+im_bl = imread('boats512_outoffocus.bmp');
+
+h = myblurgen('gaussian',8);
+
+noise_var = 0.0833;
+
+im_deblur = deblur(im_bl,h,noise_var);
+
+figure
+subplot(2,2,2)
+imshow(im_deblur)
+title('Original image')
+
+subplot(2,2,1)
+imshow(im_bl)
+title('Blurred image')
+
+subplot(2,2,3)
+imagesc(log(abs(fftshift(fft2(im_bl)))));
+title('Spectrum of blurred image')
+colorbar
+caxis([0 16])
+
+subplot(2,2,4)
+imagesc(log(abs(fftshift(fft2(im_deblur)))))
+title('Spectrum of deblurred image')
+colorbar
+caxis([0 16])

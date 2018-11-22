@@ -1,25 +1,13 @@
-function im = deblur(im_bl,h,var,type)
+function im_deblur = deblur(im_bl,h,var)
 
-h = mat2gray(h); %normalize [0,1]
-h = imresize(h,size(im_bl));
+G=fftshift(fft2(im_bl,size(im_bl,1),size(im_bl,2)));
+H=fftshift(fft2(h,size(im_bl,1),size(im_bl,2)));
 
-G = fftshift(fft2(im_bl));
+F=G.*H./(H.^2+(var));
 
+F=ifftshift(F);
 
-if type == 'MMSE' % Wiener filter
-    
-    F = (h./(h.^2+(var))); 
-    
-    IM_F = G.*F;
-    
-    im = ifft2(ifftshift(IM_F));   
-    
-   
-elseif type == 'CLS'
-    
+im_deblur=uint8(abs(ifft2(F)));   
 
-else
-    warning('wrong filter type')
-end
 
 end
