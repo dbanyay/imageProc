@@ -90,9 +90,12 @@ im_sp(n==1) = 255;
 % 
 %% 3. Freqency domain filtering
 
-im_bl = imread('boats512_outoffocus.bmp');
+%im_bl = imread('boats512_outoffocus.bmp');
+
+
 
 h = myblurgen('gaussian',8);
+im_bl = conv2(im, h);
 
 noise_var = 0.0833;
 
