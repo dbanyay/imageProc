@@ -18,22 +18,22 @@ im_sp(n==1) = 255;
 
 %Reducing the contrast of Image
 
-a = 0.2;
-b = 50;
-
-imRedDynRange = round(a*im + b);
-imRedDynRange(imRedDynRange > 255) = 255;
-imRedDynRange(imRedDynRange < 000) = 000;
-
-%Histogram Equalization
-[counts,binLocations] = imhist(im);
-probaBin = 255*counts./(sum(counts));
-equalizedValue = cumsum(probaBin);
-eqIm = im;
-
-for i = 1:numel(binLocations)
-    eqIm(im == binLocations(i)) = equalizedValue(i);
-end
+% a = 0.2;
+% b = 50;
+% 
+% imRedDynRange = round(a*im + b);
+% imRedDynRange(imRedDynRange > 255) = 255;
+% imRedDynRange(imRedDynRange < 000) = 000;
+% 
+% %Histogram Equalization
+% [counts,binLocations] = imhist(im);
+% probaBin = 255*counts./(sum(counts));
+% equalizedValue = cumsum(probaBin);
+% eqIm = im;
+% 
+% for i = 1:numel(binLocations)
+%     eqIm(im == binLocations(i)) = equalizedValue(i);
+% end
 
 % %Plotting the Histograms
 % figure(1)
