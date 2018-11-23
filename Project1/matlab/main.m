@@ -1,4 +1,4 @@
-%close all
+close all
 clear all
 
 %% 1. Open image
@@ -40,7 +40,7 @@ figure(1)
 subplot(3,1,1)
 imhist(im)
 title('Original Image','fontweight','normal');
-% bar('BarWidth', 0);
+%bar('BarWidth', 0);
 subplot(3,1,2)
 imhist(imRedDynRange)
 title('Reduced Contrast Image','fontweight','normal');
@@ -57,21 +57,21 @@ axis([0 255 0 255])
 xlabel('Gray Scale value in original Image')
 ylabel('Gray Scale value in transformed Image')
 title('Transfer function used for Equalization')
-% 
-% %Grayscale representation of Images
-% figure(2)
-% suptitle('Grayscale Representation')
-% subplot(2,2,1)
-% imshow(im)
-% title('Original Image','fontweight','normal');
-% subplot(2,2,2)
-% imshow(imRedDynRange)
-% title('After Contrast Reduction','fontweight','normal');
-% subplot(2,2,3)
-% imshow(eqIm);
-% title('After Histogram Equalization','fontweight','normal');
 
-Scale color representation of Images for Visual Inspection
+%Grayscale representation of Images
+figure(2)
+%suptitle('Grayscale Representation')
+subplot(2,2,1)
+imshow(im)
+title('Original Image','fontweight','normal');
+subplot(2,2,2)
+imshow(imRedDynRange)
+title('After Contrast Reduction','fontweight','normal');
+subplot(2,2,3)
+imshow(eqIm);
+title('After Histogram Equalization','fontweight','normal');
+
+%Scale color representation of Images for Visual Inspection
 figure(3)
 subplot(2,2,1)
 imagesc(im, [0 255]);
@@ -113,6 +113,25 @@ colorbar
 caxis([0 16])
 
 subplot(2,2,4)
+imagesc(log(abs(fftshift(fft2(im_deblur)))))
+title('Spectrum of deblurred image')
+colorbar
+caxis([0 16])
+
+figure
+subplot(3,1,1)
+imagesc(log(abs(fftshift(fft2(im)))));
+title('Spectrum of original image')
+caxis([0 16])
+colorbar
+
+subplot(3,1,2)
+imagesc(log(abs(fftshift(fft2(im_bl)))));
+title('Spectrum of blurred image')
+caxis([0 16])
+colorbar
+
+subplot(3,1,3)
 imagesc(log(abs(fftshift(fft2(im_deblur)))))
 title('Spectrum of deblurred image')
 colorbar
